@@ -22,7 +22,7 @@ type SiftKeypoint struct {
 	Sigma float32 `json:"sigma"`
 }
 
-// function for conversion between go and C
+// function for sift keypoint struct conversion between go and C
 func getSiftKeyPoints(ret *C.VlSiftKeypoint, length int) []SiftKeypoint {
 	hdr := reflect.SliceHeader{
 		Data: uintptr(unsafe.Pointer(ret)),
