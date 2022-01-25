@@ -16,10 +16,20 @@ const (
 	VlErrorEOF      VlErrorType = 5
 )
 
+// img data switch to C
+
 func toCFloatArrayPtr(img []float32) *C.float {
 	datas := make([]C.float, len(img))
 	for i, goData := range img {
 		datas[i] = C.float(goData)
+	}
+	return &datas[0]
+}
+
+func toCUcharArrayPtr(img []uint8) *C.uchar {
+	datas := make([]C.uchar, len(img))
+	for i, goData := range img {
+		datas[i] = C.uchar(goData)
 	}
 	return &datas[0]
 }
