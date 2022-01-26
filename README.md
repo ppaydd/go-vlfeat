@@ -1,32 +1,20 @@
 # go-vlfeat
-vlfeat 库的 go 语言版本实现
+[vlfeat](https://github.com/vlfeat/vlfeat) 的 go 语言版本实现
 
 目前版本支持的 vlfeat v0.9.21
 
-sample code:
+建议通过此项目学习 cgo 的基本用法
+
+### example:
 
 ```
-mat, _ := gocv.IMRead("1.jpg", gocv.IMReadGrayScale)
-floatImg := gocv.NewMat()
-mat.ConvertTo(&floatImg, gocv.MatTypeCV32F)
-floaImgData, _ := floatImg.DataPtrFloat32()
-sift := vlfeat.NewSift(mat.Cols(), mat.Rows(), 4, 2, 0)
-if sift.ProcessFirstOctave(floaImgData) != vlfeat.VlErrorEOF {
-    for {
-        sift.Detect()
-        detectedKeypoints := sift.GetKeypoints()
-        nkeys := sift.GetNkeypoints()
-        for i := 0; i < nkeys; i++ {
-            angleCount, angles := sift.CalcKeypointOrientations(detectedKeypoints[i])
-            for j := 0; j < angleCount; j++ {
-                angleDesc := sift.CalcKeypointDescriptor(128, detectedKeypoints[i], angles[j])
-                // 处理 angleDesc
-            }
-        }
-        if sift.ProcessNextOctave() == vlfeat.VlErrorEOF {
-            break
-        }
-    }
-}
-defer sift.Delete()
+dsift := vlfeat.NewDsift(imgWidth, imgHeight)
+defer dsift.Delete()
+dsift.Process(imgData)
+keypoints := dsift.GetKeypoints()
+descriptors := dsift.GetDescriptors()
 ```
+
+### 不足之处
+- cgo 依赖于 vlfeat 的头文件与动态扩展库，需要指定路径，所以把相关文件暂时放在项目中 
+- 需要使用的话建议 fork 此项后自己做一些改动
