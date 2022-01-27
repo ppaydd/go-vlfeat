@@ -290,16 +290,20 @@ func (covdet *CovDet) GetTransposed() bool {
 	return C.vl_covdet_get_transposed(covdet.p) != 0
 }
 
-// skiped because the return struct in other algorithm
-func (covdet *CovDet) GetGss() {
+// https://www.vlfeat.org/api/covdet_8c.html#a9416c377debcf2e9e630d4d20818da8e
+func (covdet *CovDet) GetGss() ScaleSpace {
+	gss := C.vl_covdet_get_gss(covdet.p)
+	return ScaleSpace{p: gss}
 }
 
-func (covdet *CovDet) GetCss() {
+// https://www.vlfeat.org/api/covdet_8c.html#a6f400eefd8cd2a866295dd928b046f58
+func (covdet *CovDet) GetCss() ScaleSpace {
+	css := C.vl_covdet_get_css(covdet.p)
+	return ScaleSpace{p: css}
 }
 
 // https://www.vlfeat.org/api/covdet_8c.html#a997689d5bf1078028223ebad6f1f0626
 // because libvl not have vl_covdet_get_laplacian_peak_threshold function
-// and VlCovDet strtuct not have this field
 func (covdet *CovDet) GetLaplacianPeakThreshold() {
 }
 
