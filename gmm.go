@@ -130,7 +130,7 @@ func (gmm *GMM) SetVerbosity(verbosity int) {
 
 // https://www.vlfeat.org/api/gmm_8c.html#a3f34a10ef70b880a81eabce9fc29cc2e
 func (gmm *GMM) SetInitialization(init VlGMMInitialization) {
-	C.vl_gmm_set_verbosity(gmm.p, C.VlGMMInitialization(init))
+	C.vl_gmm_set_verbosity(gmm.p, C.int(init))
 }
 
 func (gmm *GMM) SetKmeansInitObject() {}
@@ -139,7 +139,7 @@ func (gmm *GMM) SetKmeansInitObject() {}
 func (gmm *GMM) SetCovarianceLowerBounds(bounds []float64) {
 	cBounds := make([]C.double, len(bounds))
 	for i, bound := range bounds {
-		cBounds[i] = C.float(bound)
+		cBounds[i] = C.double(bound)
 	}
 	C.vl_gmm_set_covariance_lower_bounds(gmm.p, &cBounds[0])
 }

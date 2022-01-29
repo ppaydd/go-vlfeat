@@ -53,7 +53,7 @@ func toCUcharArrayPtr(img []uint8) *C.uchar {
 	return &datas[0]
 }
 
-func ToCVlTypeArrayPtr(data interface{}, vlType VlType) (unsafe.Pointer, arrayLength, error) {
+func ToCVlTypeArrayPtr(data interface{}, vlType VlType) (unsafe.Pointer, int, error) {
 	switch reflect.TypeOf(data).Kind() {
 	case reflect.Slice, reflect.Array:
 		slice := reflect.ValueOf(data)
