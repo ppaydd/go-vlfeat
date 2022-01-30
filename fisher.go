@@ -17,7 +17,7 @@ const (
 )
 
 // https://www.vlfeat.org/api/fisher_8h.html#a4c13fe11e9847f9046c2636a6e77c1bd
-func FisherEncodeFloat(dataType VlType, means interface{}, dimension, numClusters uint, covariances, priors, data interface{}, numData uint, flag FisherFlag) (uint, []float64, error) {
+func FisherEncode(dataType VlType, means interface{}, dimension, numClusters uint, covariances, priors, data interface{}, numData uint, flag FisherFlag) (uint, []float64, error) {
 	encLength := 2 * int(dimension*numClusters)
 	enc := make([]float64, encLength)
 	cEnc := make([]C.double, encLength)
