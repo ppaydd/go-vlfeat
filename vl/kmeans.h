@@ -92,12 +92,12 @@ VL_EXPORT void vl_kmeans_quantize (VlKMeans * self,
                                    void const * data,
                                    vl_size numData) ;
 
-VL_EXPORT void vl_kmeans_quantize_ANN (VlKMeans * self,
+VL_EXPORT void vl_kmeans_quantize_ann (VlKMeans * self,
                                    vl_uint32 * assignments,
                                    void * distances,
                                    void const * data,
                                    vl_size numData,
-                                   vl_size iteration );
+                                   vl_bool iteration );
 /** @} */
 
 /** @name Advanced data processing

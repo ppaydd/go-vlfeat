@@ -21,21 +21,6 @@ const (
 	VlErrorEOF      VlErrorType = 5
 )
 
-type VlType uint
-
-const (
-	VlTypeFloat  VlType = 1
-	VlTypeDouble VlType = 2
-	VlTypeInt8   VlType = 3
-	VlTypeUint8  VlType = 4
-	VlTypeInt16  VlType = 5
-	VlTypeUint16 VlType = 6
-	VlTypeInt32  VlType = 7
-	VlTypeUint32 VlType = 8
-	VlTypeInt64  VlType = 9
-	VlTypeUint64 VlType = 10
-)
-
 // img data switch to C
 func toCFloatArrayPtr(img []float32) *C.float {
 	datas := make([]C.float, len(img))
@@ -52,6 +37,21 @@ func toCUcharArrayPtr(img []uint8) *C.uchar {
 	}
 	return &datas[0]
 }
+
+type VlType uint
+
+const (
+	VlTypeFloat  VlType = 1
+	VlTypeDouble VlType = 2
+	VlTypeInt8   VlType = 3
+	VlTypeUint8  VlType = 4
+	VlTypeInt16  VlType = 5
+	VlTypeUint16 VlType = 6
+	VlTypeInt32  VlType = 7
+	VlTypeUint32 VlType = 8
+	VlTypeInt64  VlType = 9
+	VlTypeUint64 VlType = 10
+)
 
 func ToCVlTypeArrayPtr(data interface{}, vlType VlType) (unsafe.Pointer, int, error) {
 	switch reflect.TypeOf(data).Kind() {
@@ -123,3 +123,19 @@ func ToCVlTypeArrayPtr(data interface{}, vlType VlType) (unsafe.Pointer, int, er
 	}
 	return nil, 0, errors.New("must be support slice or array")
 }
+
+type VlVectorComparisonType int
+
+const (
+	VlDistanceL1          VlVectorComparisonType = 0
+	VlDistanceL2          VlVectorComparisonType = 1
+	VlDistanceChi2        VlVectorComparisonType = 2
+	VlDistanceHellinger   VlVectorComparisonType = 3
+	VlDistanceJS          VlVectorComparisonType = 4
+	VlDistanceMahalanobis VlVectorComparisonType = 5
+	VlKernelL1            VlVectorComparisonType = 6
+	VlKernelL2            VlVectorComparisonType = 7
+	VlKernelChi2          VlVectorComparisonType = 8
+	VlKernelHellinger     VlVectorComparisonType = 9
+	VlKernelJS            VlVectorComparisonType = 10
+)
