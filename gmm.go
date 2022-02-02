@@ -65,8 +65,15 @@ func (gmm *GMM) InitWithRandData(data interface{}) error {
 	return nil
 }
 
-// used other algorithm, delay first
-func (gmm *GMM) InitWithKmeans() {
+// https://www.vlfeat.org/api/gmm_8c.html#a21934aa27cd02d67734d311c4207829e
+func (gmm *GMM) InitWithKmeans(data interface{}, kmeansInit Kmeans) error {
+	vltype := gmm.GetDataType()
+	dataPtr, length, err := ToCVlTypeArrayPtr(data, vltype)
+	if err != nil {
+		return err
+	}
+	C.vl_gmm_init_with_kmeans(gmm.p, dataPtr, C.uint(length), kmeansInit.p)
+	return nil
 }
 
 // https://www.vlfeat.org/api/gmm_8c.html#a4f8f3fc91d284a2866fc5fd5d5b48dfd
@@ -133,7 +140,10 @@ func (gmm *GMM) SetInitialization(init VlGMMInitialization) {
 	C.vl_gmm_set_verbosity(gmm.p, C.int(init))
 }
 
-func (gmm *GMM) SetKmeansInitObject() {}
+// https://www.vlfeat.org/api/gmm_8c.html#ae740ca4d9c354ac9d83c89127bce744c
+func (gmm *GMM) SetKmeansInitObject(kmeans Kmeans) {
+	C.vl_gmm_set_kmeans_init_object(gmm.p, kmeans.p)
+}
 
 // https://www.vlfeat.org/api/gmm_8c.html#ac5b9aa600e348e99907cdb9f160c8d1d
 func (gmm *GMM) SetCovarianceLowerBounds(bounds []float64) {
@@ -232,4 +242,7 @@ func (gmm *GMM) GetCovarianceLowerBounds() []float64 {
 	return bounds
 }
 
-func (gmm *GMM) GetKmeansInitObject() {}
+// https://www.vlfeat.org/api/gmm_8c.html#a6c35a5179c1a1061b0ed243d56e12dc7
+func (gmm *GMM) GetKmeansInitObject() Kmeans {
+	return Kmeans{p: C.vl_gmm_get_kmeans_init_object(gmm.p)}
+}
