@@ -90,6 +90,8 @@ func (kmeans *Kmeans) Quantize(data interface{}, numData uint) ([]uint, []float6
 	return assignments, distances, nil
 }
 
+/*
+ this function of kemans header file is error
 // https://www.vlfeat.org/api/kmeans_8c.html#aa1b270ad6b6e303994629b74b4862f8e
 func (kmeans *Kmeans) QuantizeAnn(data interface{}, numData uint, update bool) ([]uint, []float64, error) {
 	distances := make([]float64, numData)
@@ -115,7 +117,7 @@ func (kmeans *Kmeans) QuantizeAnn(data interface{}, numData uint, update bool) (
 	}
 	return assignments, distances, nil
 }
-
+*/
 /* Advanced data processing */
 
 // https://www.vlfeat.org/api/kmeans_8c.html#ac86bd2fa181f6e23e22a6ad92f25288c
